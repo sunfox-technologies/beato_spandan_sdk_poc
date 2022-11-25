@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BeetoPOC</string>
+    <string name="lead_ii_test">lead II test</string>
+    <string name="_12_lead_test">12 lead test</string>
+</resources>
