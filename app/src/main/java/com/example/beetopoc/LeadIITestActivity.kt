@@ -10,7 +10,7 @@ import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.usb_connect
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.DeviceConnectionState
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgPosition
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgTestType
-import `in`.sunfox.healthcare.commons.java.ecg_processor.conclusions.LeadTwoConclusion
+import `in`.sunfox.healthcare.java.commons.ecg_processor.conclusions.conclusion.LeadTwoConclusion
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -35,7 +35,7 @@ class LeadIITestActivity : AppCompatActivity() {
         /**
          * step :-1
          * sdk initialization*/
-        SpandanSDK.initialize("-AcToLlJOY2Xyqui1AIumMlwEt5KsbzJIvR5krINljsGZkyfK3ZyFkllcB33xcuDrfrGY4unwebnOfNge0fUrVkAZIoKWLhqWRYOZdsjyEfMSrPwImFC0kXxgeuUKf-_jpxVcQmrVaNkXYCxNmRF6RAwF2UjMNVRQxXLQKVUl82WClTRKeDp_RJrfLPGu_QCRy7bfLJWejk0kHm5Y9YvLSlJQ5Gr9r3DXKxYGrd9ud65XhmZLq2MIza8v8orccmnQOIH3vk-WWy1ffF_BciTOUjIOXTXCfw4hMR0YL3BpUw2k6oI4uQHlkY4O4TYtTT4I6BrWRP7TLtm3HPg--HTEg",application)
+        SpandanSDK.initialize("-AcToLlJOY2Xyqui1AIumMlwEt5KsbzJIvR5krINljsGZkyfK3ZyFkllcB33xcuDknzhPfVZpffOKE2-EOoBylkAZIoKWLhqWRYOZdsjyEdrawAz_iUxoWABps_52D6VbvBs5SCl78asap8yD1gLZBAwF2UjMNVRQxXLQKVUl82WClTRKeDp_RJrfLPGu_QCRy7bfLJWejk0kHm5Y9YvLSlJQ5Gr9r3DXKxYGrd9ud76eth01ZhL8Y_NugOtJQ2l7qBQy3sdOSOoiTs-uxpDprJ0hI8vozfCp_hsLB3Uhf3jftvFY6-aUGlCG8_Y0352r7OGdKHFKlxmXEGGn4cvvQ",application)
         spandanSDK = SpandanSDK.getInstance()
 
         /**

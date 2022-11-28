@@ -10,7 +10,7 @@ import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.usb_connect
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.DeviceConnectionState
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgPosition
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgTestType
-import `in`.sunfox.healthcare.commons.java.ecg_processor.conclusions.TwelveLeadConclusion
+import `in`.sunfox.healthcare.java.commons.ecg_processor.conclusions.conclusion.TwelveLeadConclusion
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

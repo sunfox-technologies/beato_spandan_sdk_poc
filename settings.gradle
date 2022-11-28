@@ -1,3 +1,10 @@
+//def getBeetoPassword() {
+//    Properties properties = new Properties()
+//    properties.load(new File(rootDir.absolutePath + "/local.properties").newDataInputStream())
+//    def externalModuleDir = properties.getProperty('BeetoPassword', null)
+//    return externalModuleDir
+//}
+
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -8,16 +15,25 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(new File("local.properties")))
         maven {
             url ('https://jitpack.io')
         }
         google()
         mavenCentral()
         maven {
+            url = uri("https://maven.pkg.github.com/sunfox-technologies/ecg_processor")
+            credentials {
+                username = properties.getProperty("github_username", "")
+                password = properties.getProperty("github_token", "")
+            }
+        }
+        maven {
             url = uri("https://maven.pkg.github.com/sunfox-technologies/spandan_ecg_android_sdk")
             credentials {
-                username='beato'
-                password='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'
+                username = properties.getProperty("github_username", "")
+                password = properties.getProperty("github_token", "")
             }
         }
     }
