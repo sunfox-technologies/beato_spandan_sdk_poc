@@ -32,9 +32,6 @@ class TwelveLeadTestActivity : AppCompatActivity() {
 
         binding.activityMainTextviewCurrentPosition.text = "Please select the lead"
 
-        /**
-         * step :-1
-         * sdk initialization*/
         spandanSDK = SpandanSDK.getInstance()
 
         /**
