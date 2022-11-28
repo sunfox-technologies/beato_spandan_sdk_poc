@@ -1,4 +1,4 @@
-package com.example.beetopoc
+package com.example.beatopoc
 
 import org.junit.Test
 

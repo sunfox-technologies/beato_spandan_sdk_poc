@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.beetopoc'
+    namespace 'com.example.beatopoc'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.beetopoc"
+        applicationId "com.example.beatopoc"
         minSdk 21
         targetSdk 33
         versionCode 1

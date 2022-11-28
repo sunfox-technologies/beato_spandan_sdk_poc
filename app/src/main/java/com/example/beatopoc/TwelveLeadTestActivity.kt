@@ -1,11 +1,10 @@
-package com.example.beetopoc
+package com.example.beatopoc
 
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.OnReportGenerationStateListener
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.SpandanSDK
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTest
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTestCallback
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.conclusion.EcgReport
-import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.OnDeviceConnectionStateChangeListener
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.usb_connection.UsbConnectionHelper
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.DeviceConnectionState
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgPosition
@@ -16,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.example.beetopoc.databinding.ActivityTwelveLeadTestBinding
+import com.example.beatopoc.databinding.ActivityTwelveLeadTestBinding
 
 class TwelveLeadTestActivity : AppCompatActivity() {
     private lateinit var binding:ActivityTwelveLeadTestBinding
