@@ -25,15 +25,15 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://maven.pkg.github.com/sunfox-technologies/ecg_processor")
             credentials {
-                username = properties.getProperty("github_username", "")
-                password = properties.getProperty("github_token", "")
+                username = properties.getProperty("repo_username", "")
+                password = properties.getProperty("repo_token", "")
             }
         }
         maven {
             url = uri("https://maven.pkg.github.com/sunfox-technologies/spandan_ecg_android_sdk")
             credentials {
-                username = properties.getProperty("github_username", "")
-                password = properties.getProperty("github_token", "")
+                username = properties.getProperty("repo_username", "")
+                password = properties.getProperty("repo_token", "")
             }
         }
     }
