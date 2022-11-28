@@ -3,7 +3,7 @@ package com.example.beatopoc
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.SpandanSDK
 import android.app.Application
 
-class Beato:Application() {
+class BeatoApplication:Application() {
 
     /**
      * step :-1
