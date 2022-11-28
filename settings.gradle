@@ -8,19 +8,28 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(new File("local.properties")))
         maven {
             url ('https://jitpack.io')
         }
         google()
         mavenCentral()
         maven {
+            url = uri("https://maven.pkg.github.com/sunfox-technologies/ecg_processor")
+            credentials {
+                username = properties.getProperty("repo_username", "")
+                password = properties.getProperty("repo_token", "")
+            }
+        }
+        maven {
             url = uri("https://maven.pkg.github.com/sunfox-technologies/spandan_ecg_android_sdk")
             credentials {
-                username='beato'
-                password='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'
+                username = properties.getProperty("repo_username", "")
+                password = properties.getProperty("repo_token", "")
             }
         }
     }
 }
-rootProject.name = "BeetoPOC"
+rootProject.name = "BeatoPOC"
 include ':app'

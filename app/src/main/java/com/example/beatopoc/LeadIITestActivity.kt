@@ -1,23 +1,22 @@
-package com.example.beetopoc
+package com.example.beatopoc
 
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.OnReportGenerationStateListener
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.SpandanSDK
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTest
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTestCallback
-import `in`.sunfox.healthcare.commons.android.spandan_sdk.conclusion.Conclusion
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.conclusion.EcgReport
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.usb_connection.UsbConnectionHelper
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.DeviceConnectionState
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgPosition
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgTestType
-import `in`.sunfox.healthcare.commons.java.ecg_processor.conclusions.LeadTwoConclusion
+import `in`.sunfox.healthcare.java.commons.ecg_processor.conclusions.conclusion.LeadTwoConclusion
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.example.beetopoc.databinding.ActivityLeadIitestBinding
+import com.example.beatopoc.databinding.ActivityLeadIitestBinding
 
 class LeadIITestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLeadIitestBinding
@@ -32,10 +31,6 @@ class LeadIITestActivity : AppCompatActivity() {
 
         binding.activityMainTextviewCurrentPosition.text = "Please select the lead"
 
-        /**
-         * step :-1
-         * sdk initialization*/
-        SpandanSDK.initialize("-AcToLlJOY2Xyqui1AIumMlwEt5KsbzJIvR5krINljsGZkyfK3ZyFkllcB33xcuDrfrGY4unwebnOfNge0fUrVkAZIoKWLhqWRYOZdsjyEfMSrPwImFC0kXxgeuUKf-_jpxVcQmrVaNkXYCxNmRF6RAwF2UjMNVRQxXLQKVUl82WClTRKeDp_RJrfLPGu_QCRy7bfLJWejk0kHm5Y9YvLSlJQ5Gr9r3DXKxYGrd9ud65XhmZLq2MIza8v8orccmnQOIH3vk-WWy1ffF_BciTOUjIOXTXCfw4hMR0YL3BpUw2k6oI4uQHlkY4O4TYtTT4I6BrWRP7TLtm3HPg--HTEg",application)
         spandanSDK = SpandanSDK.getInstance()
 
         /**
