@@ -35,7 +35,6 @@ class TwelveLeadTestActivity : AppCompatActivity() {
         /**
          * step :-1
          * sdk initialization*/
-        SpandanSDK.initialize("-AcToLlJOY2Xyqui1AIumMlwEt5KsbzJIvR5krINljsGZkyfK3ZyFkllcB33xcuDrfrGY4unwebnOfNge0fUrVkAZIoKWLhqWRYOZdsjyEfMSrPwImFC0kXxgeuUKf-_jpxVcQmrVaNkXYCxNmRF6RAwF2UjMNVRQxXLQKVUl82WClTRKeDp_RJrfLPGu_QCRy7bfLJWejk0kHm5Y9YvLSlJQ5Gr9r3DXKxYGrd9ud65XhmZLq2MIza8v8orccmnQOIH3vk-WWy1ffF_BciTOUjIOXTXCfw4hMR0YL3BpUw2k6oI4uQHlkY4O4TYtTT4I6BrWRP7TLtm3HPg--HTEg",application)
         spandanSDK = SpandanSDK.getInstance()
 
         /**
