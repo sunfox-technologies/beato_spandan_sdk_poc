@@ -98,7 +98,6 @@ class LeadIITestActivity : AppCompatActivity() {
         }
 
 
-
         /**
          * step :-5
          * generate ecg report*/
