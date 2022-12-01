@@ -11,7 +11,7 @@ import retrofit2.Response
 
 class BeatoApplication:Application() {
 
-    lateinit var token : String
+    var token : String?=null
 
     /**
      * step :-1
