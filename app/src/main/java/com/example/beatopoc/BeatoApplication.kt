@@ -28,37 +28,5 @@ class BeatoApplication:Application() {
             }
 
         })
-//        try{
-//            SpandanSDK.initialize(this,"4u838u43u439u3",object : OnInitializationCompleteListener{
-//                override fun onInitializationSuccess(p0: String) {
-//                    token = p0
-//                }
-//
-//                override fun onInitializationFailed(p0: String) {
-//
-//                }
-//
-//            })
-//        }catch (e:Exception){
-//            Thread{
-//                RetrofitHelper().
-//                getRetrofitInstance().
-//                getToken().
-//                enqueue(object : Callback<TokenRefreshResult>{
-//                    override fun onResponse(
-//                        call: Call<TokenRefreshResult>,
-//                        response: Response<TokenRefreshResult>,
-//                    ) {
-//                        response.body()?.let {
-//                            SpandanSDK.initialize(it.token,this@BeatoApplication)
-//                        }
-//                    }
-//                    override fun onFailure(call: Call<TokenRefreshResult>, t: Throwable) {
-//
-//                    }
-//
-//                })
-//            }.start()
-//        }
     }
 }
