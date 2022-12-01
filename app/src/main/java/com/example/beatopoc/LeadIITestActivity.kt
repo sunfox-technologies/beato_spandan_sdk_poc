@@ -74,7 +74,7 @@ class LeadIITestActivity : AppCompatActivity() {
                     ecgPoints[p0] = p1
             }
 
-        })
+        },(application as BeatoApplication).token)
 
 
         binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if(UsbConnectionHelper.INSTANCE.isDeviceConnected) Color.GREEN else Color.RED)
@@ -102,7 +102,7 @@ class LeadIITestActivity : AppCompatActivity() {
          * step :-5
          * generate ecg report*/
         binding.activityMainBtnGenerateReport.setOnClickListener {
-            spandanSDK.generateReport(12,ecgPoints,object : OnReportGenerationStateListener {
+            spandanSDK.generateReport(12,ecgPoints,(application as BeatoApplication).token,object : OnReportGenerationStateListener {
                 override fun onReportGenerationSuccess(p0: EcgReport) {
                     ecgReport = p0
                     runOnUiThread {
