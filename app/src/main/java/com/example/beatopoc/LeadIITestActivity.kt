@@ -5,7 +5,6 @@ import `in`.sunfox.healthcare.commons.android.spandan_sdk.SpandanSDK
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTest
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTestCallback
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.conclusion.EcgReport
-import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.usb_connection.UsbConnectionHelper
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.DeviceConnectionState
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgPosition
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.enums.EcgTestType
@@ -17,6 +16,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.beatopoc.databinding.ActivityLeadIitestBinding
+import `in`.sunfox.healthcare.commons.android.sericom.SeriCom
+import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.OnDeviceConnectionStateChangeListener
 
 class LeadIITestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLeadIitestBinding
@@ -37,19 +38,43 @@ class LeadIITestActivity : AppCompatActivity() {
             /**
              * step :-2
              * set callback for device connectivity.*/
-            spandanSDK.setOnDeviceConnectionStateChangedListener {
-                when (it) {
-                    DeviceConnectionState.DISCONNECTED -> {
-                        binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.RED)
+            spandanSDK.setOnDeviceConnectionStateChangedListener(object : OnDeviceConnectionStateChangeListener{
+                override fun onDeviceConnectionStateChanged(p0: DeviceConnectionState) {
+                    when (p0) {
+                        DeviceConnectionState.DISCONNECTED -> {
+                            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.RED)
+                        }
+                        DeviceConnectionState.CONNECTED -> {}
+//                        DeviceConnectionState.VERIFIED -> {
+//                            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.GREEN)
+//                        }
+                        DeviceConnectionState.VERIFICATION_TIME_OUT -> {}
+                        DeviceConnectionState.USB_CONNECTION_PERMISSION_DENIED -> {}
                     }
-                    DeviceConnectionState.CONNECTED -> {}
-                    DeviceConnectionState.VERIFIED -> {
-                        binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.GREEN)
-                    }
-                    DeviceConnectionState.VERIFICATION_TIME_OUT -> {}
-                    DeviceConnectionState.USB_CONNECTION_PERMISSION_DENIED -> {}
                 }
-            }
+
+                override fun onDeviceTypeChange(p0: String) {
+
+                }
+
+                override fun onDeviceVerified() {
+
+                }
+
+            })
+//            spandanSDK.setOnDeviceConnectionStateChangedListener {
+//                when (it) {
+//                    DeviceConnectionState.DISCONNECTED -> {
+//                        binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.RED)
+//                    }
+//                    DeviceConnectionState.CONNECTED -> {}
+//                    DeviceConnectionState.VERIFIED -> {
+//                        binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.GREEN)
+//                    }
+//                    DeviceConnectionState.VERIFICATION_TIME_OUT -> {}
+//                    DeviceConnectionState.USB_CONNECTION_PERMISSION_DENIED -> {}
+//                }
+//            }
             /**
              * step :-3
              * create ecg test..*/
@@ -83,7 +108,7 @@ class LeadIITestActivity : AppCompatActivity() {
             }, (application as BeatoApplication).token!!)
 
 
-            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if (UsbConnectionHelper.INSTANCE.isDeviceConnected) Color.GREEN else Color.RED)
+            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if (SeriCom.isDeviceConnected()) Color.GREEN else Color.RED)
 
 
             binding.progressBar8.setOnClickListener {
@@ -95,7 +120,7 @@ class LeadIITestActivity : AppCompatActivity() {
              * step :-4
              * start ecg test.*/
             binding.activityMainBtnStartTest.setOnClickListener {
-                if (!UsbConnectionHelper.INSTANCE.isDeviceConnected)
+                if (!SeriCom.isDeviceConnected())
                     Toast.makeText(this, "Please connect the device first.", Toast.LENGTH_SHORT)
                         .show()
                 else if (!::ecgPosition.isInitialized)
