@@ -14,12 +14,12 @@ class BeatoApplication:Application() {
      * sdk initialization*/
     override fun onCreate() {
         super.onCreate()
-        SpandanSDK.initialize(this@BeatoApplication,"enter master api key",object : OnInitializationCompleteListener{
-            override fun onInitializationSuccess(p0: String) {
-                token = p0
+        SpandanSDK.initialize(this@BeatoApplication,"enter your api key",object : OnInitializationCompleteListener{
+            override fun onInitializationSuccess(authenticationToken: String) {
+                token = authenticationToken
             }
 
-            override fun onInitializationFailed(p0: String) {
+            override fun onInitializationFailed(message: String) {
 
             }
 

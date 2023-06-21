@@ -41,8 +41,8 @@ class TwelveLeadTestActivity : AppCompatActivity() {
              * step :-2
              * set callback for device connectivity.*/
             spandanSDK.setOnDeviceConnectionStateChangedListener(object : OnDeviceConnectionStateChangeListener{
-                override fun onDeviceConnectionStateChanged(p0: DeviceConnectionState) {
-                    when(p0){
+                override fun onDeviceConnectionStateChanged(deviceConnectionState: DeviceConnectionState) {
+                    when(deviceConnectionState){
                         DeviceConnectionState.DISCONNECTED -> { binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(
                             Color.RED) }
                         DeviceConnectionState.CONNECTED -> {  }
@@ -51,7 +51,7 @@ class TwelveLeadTestActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onDeviceTypeChange(p0: String) {
+                override fun onDeviceTypeChange(deviceType: String) {
 
                 }
 
@@ -75,57 +75,57 @@ class TwelveLeadTestActivity : AppCompatActivity() {
              * step :-3
              * create ecg test..*/
             ecgTest = spandanSDK.createTest(EcgTestType.TWELVE_LEAD,object : EcgTestCallback{
-                override fun onTestFailed(p0: Int) {
+                override fun onTestFailed(statusCode: Int) {
 
                 }
 
-                override fun onTestStarted(p0: EcgPosition) {
+                override fun onTestStarted(ecgPosition: EcgPosition) {
 
                 }
 
-                override fun onElapsedTimeChanged(p0: Long, p1: Long) {
-                    binding.activityMainProgressbarTestStatus.progress = p0.toInt()
+                override fun onElapsedTimeChanged(elapsedTime: Long, remainingTime: Long) {
+                    binding.activityMainProgressbarTestStatus.progress = elapsedTime.toInt()
                     when(ecgPosition){
                         EcgPosition.V1 -> {
-                            binding.progressBar.progress = p0.toInt()
+                            binding.progressBar.progress = elapsedTime.toInt()
                         }
                         EcgPosition.V2 -> {
-                            binding.progressBar2.progress = p0.toInt()
+                            binding.progressBar2.progress = elapsedTime.toInt()
                         }
                         EcgPosition.V3 -> {
-                            binding.progressBar3.progress = p0.toInt()
+                            binding.progressBar3.progress = elapsedTime.toInt()
                         }
                         EcgPosition.V4 -> {
-                            binding.progressBar4.progress = p0.toInt()
+                            binding.progressBar4.progress = elapsedTime.toInt()
                         }
                         EcgPosition.V5 -> {
-                            binding.progressBar5.progress = p0.toInt()
+                            binding.progressBar5.progress = elapsedTime.toInt()
                         }
                         EcgPosition.V6 -> {
-                            binding.progressBar6.progress = p0.toInt()
+                            binding.progressBar6.progress = elapsedTime.toInt()
                         }
                         EcgPosition.LEAD_2 -> {
-                            binding.progressBar8.progress = p0.toInt()
+                            binding.progressBar8.progress = elapsedTime.toInt()
                         }
                         EcgPosition.LEAD_1 -> {
-                            binding.progressBar7.progress = p0.toInt()
+                            binding.progressBar7.progress = elapsedTime.toInt()
                         }
                     }
                 }
 
-                override fun onReceivedData(p0: String) {
+                override fun onReceivedData(data: String) {
 
                 }
 
                 override fun onPositionRecordingComplete(
-                    p0: EcgPosition,
-                    p1: java.util.ArrayList<Double>?,
+                    ecgPosition: EcgPosition,
+                    ecgPoints: ArrayList<Double>?
                 ) {
                     runOnUiThread {
                         Toast.makeText(this@TwelveLeadTestActivity,"lead completed",Toast.LENGTH_SHORT).show()
                     }
-                    if(p1!=null)
-                        ecgPoints[p0] = p1
+                    if(ecgPoints!=null)
+                        this@TwelveLeadTestActivity.ecgPoints[ecgPosition] = ecgPoints
                 }
 
             },(application as BeatoApplication).token!!)
@@ -186,16 +186,16 @@ class TwelveLeadTestActivity : AppCompatActivity() {
              * generate ecg report*/
             binding.activityMainBtnGenerateReport.setOnClickListener {
                 spandanSDK.generateReport(12,ecgPoints,(application as BeatoApplication).token!!,object : OnReportGenerationStateListener{
-                    override fun onReportGenerationSuccess(p0: EcgReport) {
-                        ecgReport = p0
+                    override fun onReportGenerationSuccess(ecgReport: EcgReport) {
+                        this@TwelveLeadTestActivity.ecgReport = ecgReport
                         runOnUiThread {
                             Toast.makeText(this@TwelveLeadTestActivity,"report generated",Toast.LENGTH_SHORT).show()
                         }
                     }
 
-                    override fun onReportGenerationFailed(p0: Int, p1: String) {
+                    override fun onReportGenerationFailed(errorCode: Int, errorMsg: String) {
                         runOnUiThread {
-                            Toast.makeText(this@TwelveLeadTestActivity,p1,Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@TwelveLeadTestActivity,errorMsg,Toast.LENGTH_SHORT).show()
                         }
                     }
 

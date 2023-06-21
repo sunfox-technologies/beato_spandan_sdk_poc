@@ -39,8 +39,8 @@ class LeadIITestActivity : AppCompatActivity() {
              * step :-2
              * set callback for device connectivity.*/
             spandanSDK.setOnDeviceConnectionStateChangedListener(object : OnDeviceConnectionStateChangeListener{
-                override fun onDeviceConnectionStateChanged(p0: DeviceConnectionState) {
-                    when (p0) {
+                override fun onDeviceConnectionStateChanged(deviceConnectionState: DeviceConnectionState) {
+                    when (deviceConnectionState) {
                         DeviceConnectionState.DISCONNECTED -> {
                             binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(Color.RED)
                         }
@@ -53,7 +53,7 @@ class LeadIITestActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onDeviceTypeChange(p0: String) {
+                override fun onDeviceTypeChange(deviceType: String) {
 
                 }
 
@@ -79,30 +79,31 @@ class LeadIITestActivity : AppCompatActivity() {
              * step :-3
              * create ecg test..*/
             ecgTest = spandanSDK.createTest(EcgTestType.LEAD_TWO, object : EcgTestCallback {
-                override fun onTestFailed(p0: Int) {
+                override fun onTestFailed(statusCode: Int) {
 
                 }
 
-                override fun onTestStarted(p0: EcgPosition) {
+                override fun onTestStarted(ecgPosition: EcgPosition) {
                     Toast.makeText(this@LeadIITestActivity, "test started", Toast.LENGTH_SHORT)
                         .show()
                 }
 
-                override fun onElapsedTimeChanged(p0: Long, p1: Long) {
-                    binding.activityMainProgressbarTestStatus.progress = p0.toInt()
-                    binding.progressBar8.progress = p0.toInt()
+                override fun onElapsedTimeChanged(elapsedTime: Long, remainingTime: Long) {
+                    binding.activityMainProgressbarTestStatus.progress = elapsedTime.toInt()
+                    binding.progressBar8.progress = elapsedTime.toInt()
                 }
 
-                override fun onReceivedData(p0: String) {
+                override fun onReceivedData(data: String) {
 
                 }
 
                 override fun onPositionRecordingComplete(
-                    p0: EcgPosition,
-                    p1: java.util.ArrayList<Double>?,
+                    ecgPosition: EcgPosition,
+                    ecgPoints: ArrayList<Double>?
                 ) {
-                    if (p1 != null)
-                        ecgPoints[p0] = p1
+                    if (ecgPoints!=null){
+                        this@LeadIITestActivity.ecgPoints[ecgPosition] = ecgPoints
+                    }
                 }
 
             }, (application as BeatoApplication).token!!)
@@ -138,8 +139,8 @@ class LeadIITestActivity : AppCompatActivity() {
                     ecgPoints,
                     (application as BeatoApplication).token!!,
                     object : OnReportGenerationStateListener {
-                        override fun onReportGenerationSuccess(p0: EcgReport) {
-                            ecgReport = p0
+                        override fun onReportGenerationSuccess(ecgReport: EcgReport) {
+                            this@LeadIITestActivity.ecgReport = ecgReport
                             runOnUiThread {
                                 Toast.makeText(this@LeadIITestActivity,
                                     "report generated",
@@ -147,10 +148,10 @@ class LeadIITestActivity : AppCompatActivity() {
                             }
                         }
 
-                        override fun onReportGenerationFailed(p0: Int, p1: String) {
-                            Log.d("SdkImpl.TAG", "onReportGenerationFailed: $p1")
+                        override fun onReportGenerationFailed(errorCode: Int, errorMsg: String) {
+                            Log.d("SdkImpl.TAG", "onReportGenerationFailed: $errorMsg")
                             runOnUiThread {
-                                Toast.makeText(this@LeadIITestActivity, "$p1", Toast.LENGTH_SHORT)
+                                Toast.makeText(this@LeadIITestActivity, errorMsg, Toast.LENGTH_SHORT)
                                     .show()
                             }
                         }
