@@ -1,5 +1,6 @@
 package com.example.beatopoc
 
+import android.app.ProgressDialog
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.OnReportGenerationStateListener
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.SpandanSDK
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.collection.EcgTest
@@ -12,11 +13,14 @@ import `in`.sunfox.healthcare.java.commons.ecg_processor.conclusions.conclusion.
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.beatopoc.databinding.ActivityLeadIitestBinding
 import `in`.sunfox.healthcare.commons.android.sericom.SeriCom
+import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.DeviceInfo
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.OnDeviceConnectionStateChangeListener
 
 class LeadIITestActivity : AppCompatActivity() {
@@ -26,12 +30,15 @@ class LeadIITestActivity : AppCompatActivity() {
     private var ecgReport : EcgReport? = null
     private lateinit var ecgTest: EcgTest
     private lateinit var ecgPosition: EcgPosition
+    private lateinit var progressDialog: ProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_lead_iitest)
 
         binding.activityMainTextviewCurrentPosition.text = "Please select the lead"
 
+        progressDialog = ProgressDialog(this)
         try {
             spandanSDK = SpandanSDK.getInstance()
 
@@ -57,7 +64,7 @@ class LeadIITestActivity : AppCompatActivity() {
 
                 }
 
-                override fun onDeviceVerified() {
+                override fun onDeviceVerified(deviceInfo: DeviceInfo) {
 
                 }
 
@@ -113,14 +120,17 @@ class LeadIITestActivity : AppCompatActivity() {
 
 
             binding.progressBar8.setOnClickListener {
-                ecgPosition = EcgPosition.LEAD_2
-                binding.activityMainTextviewCurrentPosition.text = EcgPosition.LEAD_2.name
+                //ecgPosition = EcgPosition.LEAD_2
+                //binding.activityMainTextviewCurrentPosition.text = EcgPosition.LEAD_2.name
             }
 
             /***
              * step :-4
              * start ecg test.*/
             binding.activityMainBtnStartTest.setOnClickListener {
+                ecgPosition = EcgPosition.LEAD_2
+                binding.activityMainTextviewCurrentPosition.text = EcgPosition.LEAD_2.name
+
                 if (!SeriCom.isDeviceConnected())
                     Toast.makeText(this, "Please connect the device first.", Toast.LENGTH_SHORT)
                         .show()
@@ -135,28 +145,38 @@ class LeadIITestActivity : AppCompatActivity() {
              * step :-5
              * generate ecg report*/
             binding.activityMainBtnGenerateReport.setOnClickListener {
-                spandanSDK.generateReport(12,
-                    ecgPoints,
-                    (application as BeatoApplication).token!!,
-                    object : OnReportGenerationStateListener {
-                        override fun onReportGenerationSuccess(ecgReport: EcgReport) {
-                            this@LeadIITestActivity.ecgReport = ecgReport
-                            runOnUiThread {
-                                Toast.makeText(this@LeadIITestActivity,
-                                    "report generated",
-                                    Toast.LENGTH_SHORT).show()
-                            }
-                        }
+                if(ecgPoints.size > 0){
+                    showProgressDialog()
+                    spandanSDK.generateReport(12,
+                        ecgPoints,
+                        (application as BeatoApplication).token!!,
+                        object : OnReportGenerationStateListener {
+                            override fun onReportGenerationSuccess(p0: EcgReport) {
+                                ecgReport = p0
+                                runOnUiThread {
+                                    hideProgressDialog()
 
-                        override fun onReportGenerationFailed(errorCode: Int, errorMsg: String) {
-                            Log.d("SdkImpl.TAG", "onReportGenerationFailed: $errorMsg")
-                            runOnUiThread {
-                                Toast.makeText(this@LeadIITestActivity, errorMsg, Toast.LENGTH_SHORT)
-                                    .show()
+    //                                binding.result.movementMethod = ScrollingMovementMethod()
+    //                                binding.result.text = "Json Format : \n${Gson().toJson(p0)}"
+                                    Toast.makeText(this@LeadIITestActivity,
+                                        "report generated",
+                                        Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
 
-                    })
+                            override fun onReportGenerationFailed(p0: Int, p1: String) {
+                                Log.d("SdkImpl.TAG", "onReportGenerationFailed: $p1")
+                                runOnUiThread {
+                                    hideProgressDialog()
+                                    Toast.makeText(this@LeadIITestActivity, "$p1", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }
+                        })
+                }
+                else{
+                    Toast.makeText(this@LeadIITestActivity,"Please complete the test",Toast.LENGTH_SHORT).show()
+                }
             }
 
             binding.activityMainBtnShowConclusion.setOnClickListener {
@@ -169,5 +189,16 @@ class LeadIITestActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showProgressDialog() {
+        progressDialog.setTitle("Please wait")
+        progressDialog.setMessage("Generating report....")
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.show()
+    }
+
+    private fun hideProgressDialog(){
+        progressDialog.dismiss()
     }
 }
