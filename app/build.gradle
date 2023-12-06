@@ -47,7 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation 'in.sunfox.healthcare.commons.java.ecg-processor:conclusions:2.0.33'
     implementation("in.sunfox.healthcare.commons.android.sericom:sericom:1.0.7")
-    implementation 'in.sunfox.healthcare.commons.android.spandan-sdk:spandan-sdk:1.0.18'
+    implementation 'in.sunfox.healthcare.commons.android.spandan-sdk:spandan-sdk:1.0.19'
     implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation "com.squareup.retrofit2:retrofit:2.9.0"

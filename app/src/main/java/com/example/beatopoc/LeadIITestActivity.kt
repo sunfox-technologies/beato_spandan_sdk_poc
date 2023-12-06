@@ -195,7 +195,7 @@ class LeadIITestActivity : AppCompatActivity() {
     private fun showProgressDialog() {
         progressDialog.setTitle("Please wait")
         progressDialog.setMessage("Generating report....")
-        progressDialog.setCanceledOnTouchOutside(true)
+        progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
     }
 
