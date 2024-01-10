@@ -20,7 +20,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.beatopoc.databinding.ActivityTwelveLeadTestBinding
 import com.google.gson.Gson
-import `in`.sunfox.healthcare.commons.android.sericom.SeriCom
+//import `in`.sunfox.healthcare.commons.android.sericom.SeriCom
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.DeviceInfo
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.OnDeviceConnectionStateChangeListener
 
@@ -139,7 +139,7 @@ class TwelveLeadTestActivity : AppCompatActivity() {
 
             },(application as BeatoApplication).token!!)
 
-            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if(SeriCom.isDeviceConnected()) Color.GREEN else Color.RED)
+            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if(SpandanSDK.getInstance().isDeviceConnected()) Color.GREEN else Color.RED)
 
             binding.progressBar.setOnClickListener {
                 ecgPosition = EcgPosition.V1
@@ -181,7 +181,7 @@ class TwelveLeadTestActivity : AppCompatActivity() {
              * step :-4
              * start ecg test.*/
             binding.activityMainBtnStartTest.setOnClickListener {
-                if(!SeriCom.isDeviceConnected())
+                if(!SpandanSDK.getInstance().isDeviceConnected())
                     Toast.makeText(this,"Please connect the device first.", Toast.LENGTH_SHORT).show()
                 else if(!::ecgPosition.isInitialized)
                     Toast.makeText(this@TwelveLeadTestActivity,"please select any lead", Toast.LENGTH_SHORT).show()

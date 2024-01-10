@@ -19,7 +19,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.example.beatopoc.databinding.ActivityLeadIitestBinding
-import `in`.sunfox.healthcare.commons.android.sericom.SeriCom
+//import `in`.sunfox.healthcare.commons.android.sericom.SeriCom
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.DeviceInfo
 import `in`.sunfox.healthcare.commons.android.spandan_sdk.connection.OnDeviceConnectionStateChangeListener
 
@@ -116,7 +116,7 @@ class LeadIITestActivity : AppCompatActivity() {
             }, (application as BeatoApplication).token!!)
 
 
-            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if (SeriCom.isDeviceConnected()) Color.GREEN else Color.RED)
+            binding.activityMainLayoutDeviceConnectionStatus.setBackgroundColor(if (SpandanSDK.getInstance().isDeviceConnected()) Color.GREEN else Color.RED)
 
 
             binding.progressBar8.setOnClickListener {
@@ -131,7 +131,7 @@ class LeadIITestActivity : AppCompatActivity() {
                 ecgPosition = EcgPosition.LEAD_2
                 binding.activityMainTextviewCurrentPosition.text = EcgPosition.LEAD_2.name
 
-                if (!SeriCom.isDeviceConnected())
+                if (!SpandanSDK.getInstance().isDeviceConnected())
                     Toast.makeText(this, "Please connect the device first.", Toast.LENGTH_SHORT)
                         .show()
                 else if (!::ecgPosition.isInitialized)
